@@ -17,3 +17,17 @@ A machine learning system for predicting customer churn.
 - Month-to-month churn rate: 42.7%.
 - One-year contract churn rate: 11.3%.
 - Two-year contract churn rate: 2.8%.
+
+### Baseline Model Results
+
+- **Dummy baseline accuracy:** 73.46%; churn recall: 0%.
+- **Model:** Logistic Regression with one-hot encoding and standardized numerical features.
+- **Accuracy:** 80.55%
+- **Precision:** 65.72%
+- **Recall:** 55.88%
+- **F1-score:** 60.40%
+- **ROC-AUC:** 0.842
+
+The Logistic Regression pipeline improved accuracy over the majority-class baseline and identified 209 of 374 churners on the held-out test set. However, it missed 165 churners, so recall and the business cost of false negatives need further investigation.
+
+**Note:** These are initial test-set results. Use validation data or cross-validation for subsequent model selection and threshold tuning.
