@@ -110,3 +110,37 @@ The tuned Logistic Regression achieved:
 **Conclusion:** Logistic Regression remained the leading candidate. Hyperparameter tuning produced only a marginal cross-validation improvement and did not improve the held-out test metrics.
 
 **Limitation:** The test set was reused during earlier experiments. Its score is therefore not a fully unbiased final estimate.
+
+
+## Error Analysis
+
+### Overall Errors
+Evaluated the tuned Logistic Regression model on the test split.
+
+- False negatives: 165
+- False positives: 110
+- True positives: 209
+- True negatives: 925
+
+### Feature-Level Analysis
+Compared missed churners with correctly detected churners.
+
+- Mean tenure: 24.88 months for missed churners vs. 9.82 months for detected churners.
+- Mean monthly charges: 65.27 for missed churners vs. 78.69 for detected churners.
+- 120 of the 165 missed churners had month-to-month contracts.
+
+### Contract-Level Analysis
+The model missed all actual churners in the one-year and two-year contract groups in this test split.
+
+Actual churners nevertheless received higher average predicted probabilities than non-churners within each contract group:
+
+- Month-to-month: 0.533 vs. 0.355
+- One year: 0.190 vs. 0.104
+- Two year: 0.061 vs. 0.030
+
+### Engineering Learning
+Aggregate metrics can hide important subgroup errors. The model shows some ability to distinguish churners within each contract group, but its default threshold of 0.5 fails to identify churners in the longer-contract groups.
+
+Potential next steps include subgroup metric evaluation, threshold selection using validation data, probability calibration checks, and further feature/error analysis.
+
+**Limitation:** Subgroup sample sizes differ substantially, especially for two-year contracts. These findings are exploratory and do not establish causation.
