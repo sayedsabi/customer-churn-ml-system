@@ -50,3 +50,34 @@ Compared Logistic Regression, an unrestricted Decision Tree, a depth-limited Dec
 - Logistic Regression achieved the best accuracy, F1-score and ROC-AUC among these initial configurations.
 - The depth-limited Decision Tree achieved slightly higher churn recall than Logistic Regression.
 - Results are preliminary; further tuning and validation are needed before selecting the final model.
+
+
+##  Model Failure Analysis
+
+### 1. Class Imbalance
+Trained Logistic Regression with `class_weight="balanced"` to increase attention to the minority churn class.
+
+- Original recall: 55.88%
+- Balanced recall: 78.34%
+- Original false negatives: 165
+- Balanced false negatives: 81
+- Trade-off: false positives increased from 109 to 288.
+
+**Learning:** Improving churn detection can increase unnecessary retention outreach. Model selection should account for business costs, not accuracy alone.
+
+### 2. Prediction Threshold Experiments
+Compared thresholds of 0.3, 0.5, and 0.7 using predicted churn probabilities.
+
+- Threshold 0.3: higher recall, more false positives.
+- Threshold 0.5: intermediate trade-off.
+- Threshold 0.7: higher precision, but substantially lower recall.
+
+**Learning:** Threshold selection depends on the cost of missed churners versus unnecessary interventions.
+
+### 3. Data Leakage
+Created an isolated experiment where a feature directly copied the target column. Directly using that feature as the prediction produced 100% accuracy.
+
+**Learning:** Leakage creates misleading evaluation results when information unavailable at prediction time enters the features. Features must be checked for target-derived and future information.
+
+### Engineering Note
+The experiments reused the test set for comparisons, so these results are exploratory rather than an unbiased final evaluation. The next stage will use cross-validation for model selection and reserve the test set for final evaluation.
