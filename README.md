@@ -81,3 +81,32 @@ Created an isolated experiment where a feature directly copied the target column
 
 ### Engineering Note
 The experiments reused the test set for comparisons, so these results are exploratory rather than an unbiased final evaluation. The next stage will use cross-validation for model selection and reserve the test set for final evaluation.
+
+
+## Cross-Validation and Hyperparameter Tuning
+
+### Cross-Validation
+Used 5-fold stratified cross-validation with F1 as the selection metric.
+
+- Original Logistic Regression mean CV F1: 0.5923
+- Tuned Logistic Regression mean CV F1: 0.5975
+- Tuned Random Forest mean CV F1: 0.5833
+
+### Hyperparameter Tuning
+Used `GridSearchCV` to tune Logistic Regression's `C` and Random Forest's number of trees, depth, and minimum leaf size.
+
+- Best Logistic Regression `C`: 10
+- Best Random Forest configuration: 200 trees, depth 10, minimum leaf size 5
+
+### Evaluation
+The tuned Logistic Regression achieved:
+
+- Accuracy: 80.48%
+- Precision: 65.52%
+- Recall: 55.88%
+- F1-score: 60.32%
+- ROC-AUC: 0.8412
+
+**Conclusion:** Logistic Regression remained the leading candidate. Hyperparameter tuning produced only a marginal cross-validation improvement and did not improve the held-out test metrics.
+
+**Limitation:** The test set was reused during earlier experiments. Its score is therefore not a fully unbiased final estimate.
