@@ -303,3 +303,6 @@ The `.dockerignore` file excludes development artifacts such as `.venv`, Git met
 ## Project Status
 
 The project currently includes a reusable churn prediction pipeline, a validated FastAPI service, automated tests, and a Dockerized application with a health check. Public deployment and final unbiased model evaluation remain future steps.
+
+
+API Deployed at : https://customer-churn-ml-system-6hw1.onrender.com/docs
