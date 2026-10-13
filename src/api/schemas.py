@@ -71,3 +71,8 @@ class CustomerInput(BaseModel):
 
     MonthlyCharges: float = Field(ge=0)
     TotalCharges: float = Field(ge=0)
+
+class PredictionResponse(BaseModel):
+    churn_prediction: int = Field(ge=0, le=1)
+    churn_probability: float = Field(ge=0, le=1)
+    interpretation: str

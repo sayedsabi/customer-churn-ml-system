@@ -49,6 +49,12 @@ def test_predict_endpoint():
         "Likely to churn",
         "Unlikely to churn",
     ]
+    assert set(result.keys()) == {
+            "churn_prediction",
+            "churn_probability",
+            "interpretation",
+        }
+    
 
 
 def test_predict_rejects_missing_fields():
@@ -85,3 +91,5 @@ def test_predict_rejects_invalid_contract():
     response = client.post("/predict", json=customer)
 
     assert response.status_code == 422
+
+    
