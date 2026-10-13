@@ -26,7 +26,30 @@ def predict_churn(customer: dict) -> dict:
         raise ValueError(
             f"Missing customer fields: {sorted(missing)}"
         )
+    if not isinstance(customer["tenure"], (int, float)) or not 0 <= customer["tenure"] <= 100:
+        raise ValueError("tenure must be between 0 and 100")
 
+    if customer["SeniorCitizen"] not in (0, 1):
+        raise ValueError("SeniorCitizen must be 0 or 1")
+    allowed_values = {
+    "gender": {"Female", "Male"},
+    "Partner": {"Yes", "No"},
+    "Dependents": {"Yes", "No"},
+    "Contract": {"Month-to-month", "One year", "Two year"},
+    "InternetService": {"DSL", "Fiber optic", "No"},
+    "PhoneService": {"Yes", "No"},
+    "PaperlessBilling": {"Yes", "No"},
+    "PaymentMethod": {
+        "Electronic check",
+        "Mailed check",
+        "Bank transfer (automatic)",
+        "Credit card (automatic)",
+    },
+}
+
+    for column, allowed in allowed_values.items():
+        if customer[column] not in allowed:
+            raise ValueError(f"Invalid value for {column}: {customer[column]}")
     model = joblib.load(MODEL_PATH)
     customer_df = pd.DataFrame([customer])
 

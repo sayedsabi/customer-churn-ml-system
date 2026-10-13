@@ -144,3 +144,23 @@ Aggregate metrics can hide important subgroup errors. The model shows some abili
 Potential next steps include subgroup metric evaluation, threshold selection using validation data, probability calibration checks, and further feature/error analysis.
 
 **Limitation:** Subgroup sample sizes differ substantially, especially for two-year contracts. These findings are exploratory and do not establish causation.
+
+## ML Pipeline Refactoring
+
+Refactored notebook experimentation into reusable Python modules.
+
+- `src/data/load_data.py`: loads the cleaned dataset.
+- `src/train.py`: trains, evaluates, and saves the Logistic Regression pipeline.
+- `src/predict.py`: loads the saved model and generates churn predictions.
+- `models/churn_model.joblib`: serialized preprocessing and trained model.
+
+## Reproducibility and Testing
+
+- Used fixed random seeds for repeatable train/test splits and model training.
+- Added automated tests for dataset loading and prediction outputs.
+- Added input validation for missing fields, tenure, senior-citizen status, and selected categorical values.
+- Verified the training script produces consistent metrics across repeated runs.
+
+**Engineering learning:** Reusable modules, predictable execution, input validation, and automated tests make an ML system easier to maintain and debug.
+
+**Current limitation:** Input validation covers selected fields and rules; comprehensive type, range, and category validation remains future work.
